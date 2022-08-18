@@ -6,4 +6,7 @@ edition = "2021"
 [[bin]]
 name = "verify_ppot"
 
+[[bin]]
+name = "downloader"
+
 [dependencies]
