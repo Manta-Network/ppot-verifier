@@ -1,6 +1,5 @@
 use blake2::{Blake2b, Digest};
 use memmap::Mmap;
-use std::path::PathBuf;
 use std::{fs, io};
 
 /// Computes the hash of a potentially large file,
@@ -33,11 +32,11 @@ where
 }
 
 /// Go to github repo and parse file names
-pub fn parse_filenames() -> std::io::Result<(Vec<PathBuf>, Vec<PathBuf>)> {
+pub fn get_urls() -> std::io::Result<(Vec<String>, Vec<String>)> {
     let path = "../perpetualpowersoftau";
 
-    let mut challenge_paths = Vec::<PathBuf>::new();
-    let mut response_paths = Vec::<PathBuf>::new();
+    let mut challenge_paths = Vec::<String>::new();
+    let mut response_paths = Vec::<String>::new();
     let mut counter: usize = 0;
 
     // Get sorted list of contributions
@@ -51,23 +50,17 @@ pub fn parse_filenames() -> std::io::Result<(Vec<PathBuf>, Vec<PathBuf>)> {
         if let Ok(number) = &file_name[0..4].parse::<usize>() {
             if *number == counter {
                 // Challenge paths are just numbered
-                challenge_paths.push(
-                    format!(
-                        "https://ppot.blob.core.windows.net/public/challenge_{:04}",
-                        number + 1
-                    )
-                    .into(),
-                );
+                challenge_paths.push(format!(
+                    "https://ppot.blob.core.windows.net/public/challenge_{:04}",
+                    number + 1
+                ));
                 // Response paths require the participant name and there is no response to initial challenge
                 if counter > 0 {
-                    response_paths.push(
-                        format!(
-                            "https://ppot.blob.core.windows.net/public/response_{:04}_{:}",
-                            number,
-                            parse_participant_name(&file_name[5..]).unwrap()
-                        )
-                        .into(),
-                    );
+                    response_paths.push(format!(
+                        "https://ppot.blob.core.windows.net/public/response_{:04}_{:}",
+                        number,
+                        parse_participant_name(&file_name[5..]).unwrap()
+                    ));
                 }
 
                 counter += 1;
@@ -110,7 +103,7 @@ mod tests {
 
     #[test]
     fn test_correct_urls() {
-        let (challenge_paths, response_paths) = parse_filenames().unwrap();
+        let (challenge_paths, response_paths) = get_urls().unwrap();
         let mut all_paths_valid = true;
 
         // Check validity of each challenge path
@@ -134,11 +127,11 @@ mod tests {
 
     /// Checks validity of the URL by requesting a few bytes of the download.
     /// Returns `true` if the correct number were returned and `false` otherwise.
-    fn check_download_url(path: &Path) -> bool {
+    fn check_download_url(path: &str) -> bool {
         use curl::easy::Easy;
 
         let mut handle = Easy::new();
-        handle.url(path.to_str().unwrap()).unwrap();
+        handle.url(path).unwrap();
         handle.range("0-2").unwrap();
         handle.perform().unwrap();
 
