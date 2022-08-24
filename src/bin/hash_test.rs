@@ -4,7 +4,7 @@ use std::fs::OpenOptions; // TODO: Is standard okay?
 
 
 fn main() {
-    let path = "challenge_0001";
+    let path = "challenge_0012";
     let reader = OpenOptions::new()
             .read(true)
             .open(path)
