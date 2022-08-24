@@ -1,9 +1,13 @@
 use memmap::MmapOptions;
-use ppot_verifier::{calculate_hash, get_urls};
+use ppot_verifier::{calculate_hash, challenge_paths, response_paths};
 use std::fs::OpenOptions; // TODO: Is standard okay?
 
+
+const NUM_ROUNDS: usize = 71;
+
 fn main() {
-    let (challenge_files, response_files) = get_urls().unwrap();
+    let challenge_files = challenge_paths(NUM_ROUNDS);
+    let response_files = response_paths(NUM_ROUNDS);
     let _challenge_hashes = hash_all(challenge_files);
     let _response_hashes = hash_all(response_files);
 
