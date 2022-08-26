@@ -32,6 +32,7 @@ fn main() {
     let mut hash_path = path.to_owned();
     hash_path.push_str("_hash");
     let mut file = OpenOptions::new()
+        .create(true)
         .write(true)
         .truncate(true)
         .open(hash_path.clone())
