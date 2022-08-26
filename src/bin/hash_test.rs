@@ -1,7 +1,7 @@
 use memmap::MmapOptions;
 use ppot_verifier::{calculate_hash};
 use std::fs::OpenOptions; // TODO: Is standard okay?
-
+use std::io::{Read, Write};
 
 fn main() {
     let path = "challenge_0011";
@@ -26,4 +26,26 @@ fn main() {
                 print!(" ");
             }
         }
+    // make writer (open file in write mode)
+    // writer.write_all()
+    // see `std::io` traits
+    let mut hash_path = path.to_owned();
+    hash_path.push_str("_hash");
+    let mut file = OpenOptions::new()
+        .write(true)
+        .truncate(true)
+        .open(hash_path.clone())
+        .expect("unable to open file in this directory");
+    file.write_all(&hash).unwrap();
+    drop(file);
+
+    // Check that it worked
+    println!("Opening hash file");
+    let mut file = OpenOptions::new()
+        .read(true)
+        .open(hash_path)
+        .expect("unable to open file in this directory");
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+    println!("The contents of the file are {:?}", contents);
 }
