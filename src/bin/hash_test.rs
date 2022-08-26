@@ -48,6 +48,15 @@ fn main() {
         .expect("unable to open file in this directory");
     let mut contents = [0u8; 64];
     let bytes_read = file.read(&mut contents[..]).unwrap();
-    println!("The contents of the file are {:?}", contents);
+    println!("The contents of the file are");
+    for line in contents.chunks(16) {
+        print!("\t");
+        for section in line.chunks(4) {
+            for b in section {
+                print!("{:02x}", b);
+            }
+            print!(" ");
+        }
+    }
     assert_eq!(bytes_read, 64);
 }
