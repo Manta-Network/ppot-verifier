@@ -46,7 +46,7 @@ fn main() {
         .read(true)
         .open(hash_path)
         .expect("unable to open file in this directory");
-    let mut contents = Vec::<u8>::new();
+    let mut contents = [0u8; 64];
     let bytes_read = file.read(&mut contents[..]).unwrap();
     println!("The contents of the file are {:?}", contents);
     assert_eq!(bytes_read, 64);
