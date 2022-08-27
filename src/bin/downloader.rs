@@ -4,7 +4,6 @@ use anyhow::anyhow;
 use core::{cmp::min, num::ParseIntError, str::FromStr};
 use futures::future::try_join_all;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
-use ppot_verifier::get_urls;
 use reqwest::{
     header::{CONTENT_RANGE, RANGE},
     Client, Method, Response, StatusCode,
@@ -241,7 +240,7 @@ fn print_challenge_urls_paths() {
 #[test]
 fn print_response_urls_paths() {
     use ppot_verifier::{response_paths, response_urls};
-    
+
     let urls = response_urls();
     let paths = response_paths(urls.len());
     let output: Vec<(&str, &str)> = urls

@@ -1,4 +1,4 @@
-use manta_trusted_setup::*;
+// use manta_trusted_setup::*;
 
 fn main() {
     println!("Hello Todd");
