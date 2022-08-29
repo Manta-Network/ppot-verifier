@@ -39,7 +39,7 @@ fn main() {
                     print!(" ");
                 }
             }
-            println!("Asserted hash: {:?}");
+            println!("Asserted hash:");
             for line in asserted_challenge_hash.chunks(16) {
                 print!("\t");
                 for section in line.chunks(4) {
