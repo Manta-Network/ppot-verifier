@@ -17,20 +17,20 @@ fn main() {
             .read(true)
             .open(hash_path)
             .expect("unable to open file in this directory");
-        let mut computed_challenge_hash = [0u8; 64];
-        let _ = file.read(&mut computed_challenge_hash[..]).unwrap();
+        let mut computed_hash = [0u8; 64];
+        let _ = file.read(&mut computed_hash[..]).unwrap();
         // Read asserted hash from reponse file
         let mut file = OpenOptions::new()
             .read(true)
             .open(response)
             .expect("unable to open file in this directory");
-        let mut asserted_challenge_hash = [0u8; 64];
-        let _ = file.read(&mut asserted_challenge_hash[..]).unwrap();
+        let mut asserted_hash = [0u8; 64];
+        let _ = file.read(&mut asserted_hash[..]).unwrap();
 
-        if computed_challenge_hash != asserted_challenge_hash {
+        if computed_hash != asserted_hash {
             println!("Hashes don't match for {:?} and {:?}", challenge, response);
             println!("Computed hash");
-            for line in computed_challenge_hash.chunks(16) {
+            for line in computed_hash.chunks(16) {
                 print!("\t");
                 for section in line.chunks(4) {
                     for b in section {
@@ -39,8 +39,9 @@ fn main() {
                     print!(" ");
                 }
             }
+            println!(" ");
             println!("Asserted hash:");
-            for line in asserted_challenge_hash.chunks(16) {
+            for line in asserted_hash.chunks(16) {
                 print!("\t");
                 for section in line.chunks(4) {
                     for b in section {
@@ -51,7 +52,7 @@ fn main() {
             }
         } else {
             println!("The hash of {:?} is", challenge);
-            for line in computed_challenge_hash.chunks(16) {
+            for line in computed_hash.chunks(16) {
                 print!("\t");
                 for section in line.chunks(4) {
                     for b in section {
@@ -61,6 +62,61 @@ fn main() {
                 }
             }
         }
-        println!(" ")
+        println!(" ");
+    }
+    // Check hashes of response files
+    for (challenge, response) in challenge_files.iter().skip(2).zip(response_files.iter()) {
+        // Read computed hash of response file:
+        let mut hash_path = response.clone().to_owned();
+        hash_path.push_str("_hash");
+        let mut file = OpenOptions::new()
+            .read(true)
+            .open(hash_path)
+            .expect("unable to open file in this directory");
+        let mut computed_hash = [0u8; 64];
+        let _ = file.read(&mut computed_hash[..]).unwrap();
+        // Read asserted hash from reponse file
+        let mut file = OpenOptions::new()
+            .read(true)
+            .open(challenge)
+            .expect("unable to open file in this directory");
+        let mut asserted_hash = [0u8; 64];
+        let _ = file.read(&mut asserted_hash[..]).unwrap();
+        if computed_hash != asserted_hash {
+            println!("Hashes don't match for {:?} and {:?}", challenge, response);
+            println!("Computed hash");
+            for line in computed_hash.chunks(16) {
+                print!("\t");
+                for section in line.chunks(4) {
+                    for b in section {
+                        print!("{:02x}", b);
+                    }
+                    print!(" ");
+                }
+            }
+            println!(" ");
+            println!("Asserted hash:");
+            for line in asserted_hash.chunks(16) {
+                print!("\t");
+                for section in line.chunks(4) {
+                    for b in section {
+                        print!("{:02x}", b);
+                    }
+                    print!(" ");
+                }
+            }
+        } else {
+            println!("The hash of {:?} is", response);
+            for line in computed_hash.chunks(16) {
+                print!("\t");
+                for section in line.chunks(4) {
+                    for b in section {
+                        print!("{:02x}", b);
+                    }
+                    print!(" ");
+                }
+            }
+        }
+        println!(" ");
     }
 }
