@@ -29,16 +29,18 @@ fn main() {
 
         if computed_challenge_hash != asserted_challenge_hash {
             println!("Hashes don't match for {:?} and {:?}", challenge, response);
-        }
-
-        println!("The hash of {:?} is", challenge);
-        for line in computed_challenge_hash.chunks(16) {
-            print!("\t");
-            for section in line.chunks(4) {
-                for b in section {
-                    print!("{:02x}", b);
+            println!("Computed hash: {:?}", computed_challenge_hash);
+            println!("Asserted hash: {:?}", asserted_challenge_hash);
+        } else {
+            println!("The hash of {:?} is", challenge);
+            for line in computed_challenge_hash.chunks(16) {
+                print!("\t");
+                for section in line.chunks(4) {
+                    for b in section {
+                        print!("{:02x}", b);
+                    }
+                    print!(" ");
                 }
-                print!(" ");
             }
         }
         println!(" ")
