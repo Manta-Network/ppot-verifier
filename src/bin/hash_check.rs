@@ -27,12 +27,17 @@ fn main() {
         let mut asserted_challenge_hash = [0u8; 64];
         let _ = file.read(&mut asserted_challenge_hash[..]).unwrap();
 
-        println!(
-            "Challenge path {:?} \n response path {:?}",
-            challenge, response
-        );
-        println!("Computed challenge hash: {:?}", computed_challenge_hash);
-        println!("Asserted challenge hash: {:?}", asserted_challenge_hash);
+        assert_eq!(computed_challenge_hash, asserted_challenge_hash);
+        println!("The hash of {:?} is", challenge);
+        for line in computed_challenge_hash.chunks(16) {
+            print!("\t");
+            for section in line.chunks(4) {
+                for b in section {
+                    print!("{:02x}", b);
+                }
+                print!(" ");
+            }
+        }
         println!(" ")
     }
 }
