@@ -27,7 +27,10 @@ fn main() {
         let mut asserted_challenge_hash = [0u8; 64];
         let _ = file.read(&mut asserted_challenge_hash[..]).unwrap();
 
-        assert_eq!(computed_challenge_hash, asserted_challenge_hash);
+        if computed_challenge_hash != asserted_challenge_hash {
+            println!("Hashes don't match for {:?} and {:?}", challenge, response);
+        }
+
         println!("The hash of {:?} is", challenge);
         for line in computed_challenge_hash.chunks(16) {
             print!("\t");
