@@ -65,7 +65,7 @@ fn main() {
         println!(" ");
     }
     // Check hashes of response files
-    for (challenge, response) in challenge_files.iter().skip(2).zip(response_files.iter()) {
+    for (challenge, response) in challenge_files.iter().skip(1).zip(response_files.iter()) {
         // Read computed hash of response file:
         let mut hash_path = response.clone().to_owned();
         hash_path.push_str("_hash");
@@ -75,7 +75,7 @@ fn main() {
             .expect("unable to open file in this directory");
         let mut computed_hash = [0u8; 64];
         let _ = file.read(&mut computed_hash[..]).unwrap();
-        // Read asserted hash from reponse file
+        // Read asserted hash from challenge file
         let mut file = OpenOptions::new()
             .read(true)
             .open(challenge)
