@@ -176,7 +176,7 @@ pub fn challenge_urls() -> [&'static str; 72] {
 
 /// Challenge path names numbered from 0 to n
 pub fn challenge_paths(n: usize) -> Vec<String> {
-    (0..n+1).map(|i| format!("challenge_{:04}", i)).collect()
+    (0..n + 1).map(|i| format!("challenge_{:04}", i)).collect()
 }
 
 /// Temporary hack to get the response file URLs.
@@ -258,7 +258,7 @@ pub fn response_urls() -> [&'static str; 71] {
 
 /// Response path names numbered from 1 to n
 pub fn response_paths(n: usize) -> Vec<String> {
-    (1..n+1).map(|i| format!("response_{:04}", i)).collect()
+    (1..n + 1).map(|i| format!("response_{:04}", i)).collect()
 }
 
 #[cfg(test)]

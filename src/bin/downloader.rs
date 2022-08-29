@@ -831,6 +831,10 @@ fn main() -> Result<()> {
                     "https://ppot.blob.core.windows.net/public/response_0070_bertrand",
                     "response_0070",
                 ),
+                (
+                    "https://ppot.blob.core.windows.net/public/response_0071_edward",
+                    "response_0071",
+                ),
             ] {
                 if file_exists(&client, url).await? {
                     let multibar = multibar.clone();
