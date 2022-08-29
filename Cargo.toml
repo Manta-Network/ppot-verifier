@@ -12,6 +12,9 @@ name = "downloader"
 [[bin]]
 name = "hasher"
 
+[[bin]]
+name = "hash_test"
+
 [dependencies]
 ark-bn254 = { version = "0.3.0", default-features = false, features = ["curve", "scalar_field"] }
 ark-ec = { version = "0.3.0", default-features = false}
