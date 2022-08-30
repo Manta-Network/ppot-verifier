@@ -10,7 +10,7 @@ use std::fs::OpenOptions;
 use std::time::Instant;
 
 /// Size of subaccumulator we are verifying
-const NUM_POWERS: usize = 1 << 10;
+const NUM_POWERS: usize = 1 << 19;
 /// Subaccumulator type
 type SmallCeremony = PerpetualPowersOfTauCeremony<PpotSerializer, NUM_POWERS>;
 
@@ -34,7 +34,6 @@ unsafe fn try_into_mmap(path: &str) -> Option<Mmap> {
 
 fn main() {
     unsafe {
-        println!("Hello Todd");
         let challenges = challenge_paths(NUM_ROUNDS);
         let responses = response_paths(NUM_ROUNDS);
 
