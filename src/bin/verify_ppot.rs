@@ -41,7 +41,7 @@ fn main() {
         for i in 1..NUM_ROUNDS {
             // read next accumulator from challenge file
             let next = read_subaccumulator::<SmallCeremony>(
-                &try_into_mmap(&challenges[i-1]).unwrap(),
+                &try_into_mmap(&challenges[i+1]).unwrap(),
                 Compressed::No,
             )
             .unwrap();
