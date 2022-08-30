@@ -7,9 +7,10 @@ use manta_util::into_array_unchecked;
 use memmap::{Mmap, MmapOptions};
 use ppot_verifier::{challenge_paths, response_paths};
 use std::fs::OpenOptions;
+use std::time::Instant;
 
 /// Size of subaccumulator we are verifying
-const NUM_POWERS: usize = 1 << 5;
+const NUM_POWERS: usize = 1 << 10;
 /// Subaccumulator type
 type SmallCeremony = PerpetualPowersOfTauCeremony<PpotSerializer, NUM_POWERS>;
 
@@ -37,11 +38,17 @@ fn main() {
         let challenges = challenge_paths(NUM_ROUNDS);
         let responses = response_paths(NUM_ROUNDS);
 
-        let mut prev = Accumulator::<SmallCeremony>::default();
+        let mut prev = read_subaccumulator::<SmallCeremony>(
+            &try_into_mmap(&challenges[1]).unwrap(),
+            Compressed::No,
+        )
+        .unwrap();
         for i in 1..NUM_ROUNDS {
+            let now = Instant::now();
+
             // read next accumulator from challenge file
             let next = read_subaccumulator::<SmallCeremony>(
-                &try_into_mmap(&challenges[i+1]).unwrap(),
+                &try_into_mmap(&challenges[i + 1]).unwrap(),
                 Compressed::No,
             )
             .unwrap();
@@ -61,11 +68,14 @@ fn main() {
                 challenge_hash,
                 proof.cast_to_subceremony(),
             ) {
-                Ok(accumulator) => accumulator,
+                Ok(accumulator) => {
+                    println!("Verified round {:?} in {:?}", i, now.elapsed());
+                    accumulator
+                }
                 Err(e) => {
                     println!("Verification error {:?} occurred checking round {:?}", e, i);
-                    // To continue with verification, try just using the next subaccumulator to continue
-                    // TODO: Remove that
+                    // We continue with verification anyway, try just using the unverified next subaccumulator.
+                    // This makes sense because it helps us to detect individual corrupted files.
                     read_subaccumulator::<SmallCeremony>(
                         &try_into_mmap(&challenges[i + 1]).unwrap(),
                         Compressed::No,
