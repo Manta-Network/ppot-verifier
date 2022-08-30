@@ -28,8 +28,8 @@ blake2 = { version = "0.10.4", default-features = false }
 curl = "0.4.44"
 derivative = { version = "2.2.0", default-features = false, features = ["use_core"] }
 memmap = "0.7.0"
-# manta-trusted-setup = { git = "https://github.com/Manta-Network/manta-rs.git", branch = "feat/bn_backend", features = ["ppot"] }
-manta-trusted-setup = { git = "https://github.com/Manta-Network/manta-rs.git", branch = "main" }
+manta-trusted-setup = { git = "https://github.com/Manta-Network/manta-rs.git", branch = "feat/bn_backend", features = ["ppot"] }
+manta-util = { git = "https://github.com/Manta-Network/manta-rs.git", branch = "feat/bn_backend", features = ["reqwest", "serde"] }
 anyhow = "1.0.62"
 futures = "0.3.23"
 indicatif = "0.17.0"
