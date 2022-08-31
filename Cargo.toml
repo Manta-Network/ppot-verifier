@@ -18,6 +18,9 @@ name = "hash_test"
 [[bin]]
 name = "hash_check"
 
+[[bin]]
+name = "hash_problem"
+
 [dependencies]
 ark-bn254 = { version = "0.3.0", default-features = false, features = ["curve", "scalar_field"] }
 ark-ec = { version = "0.3.0", default-features = false}
