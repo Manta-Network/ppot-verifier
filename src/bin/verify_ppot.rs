@@ -10,7 +10,7 @@ use std::fs::OpenOptions;
 use std::time::Instant;
 
 /// Size of subaccumulator we are verifying
-const NUM_POWERS: usize = 1 << 15;
+const NUM_POWERS: usize = 1 << 5;
 /// Subaccumulator type
 type SmallCeremony = PerpetualPowersOfTauCeremony<PpotSerializer, NUM_POWERS>;
 
