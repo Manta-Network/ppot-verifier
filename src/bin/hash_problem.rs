@@ -12,7 +12,7 @@ use anyhow::anyhow;
 use core::{cmp::min, num::ParseIntError, str::FromStr};
 use futures::future::try_join_all;
 use indicatif::{MultiProgress, ProgressBar, ProgressStyle};
-use manta_util::http::reqwest::{
+use reqwest::{
     header::{CONTENT_RANGE, RANGE},
     Client, Method, Response, StatusCode,
 };
