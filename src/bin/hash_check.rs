@@ -51,18 +51,18 @@ fn main() {
                 }
             }
         } else {
-            println!("The hash of {:?} is", challenge);
-            for line in computed_hash.chunks(16) {
-                print!("\t");
-                for section in line.chunks(4) {
-                    for b in section {
-                        print!("{:02x}", b);
-                    }
-                    print!(" ");
-                }
-            }
+            // println!("The hash of {:?} is", challenge);
+            // for line in computed_hash.chunks(16) {
+            //     print!("\t");
+            //     for section in line.chunks(4) {
+            //         for b in section {
+            //             print!("{:02x}", b);
+            //         }
+            //         print!(" ");
+            //     }
+            // }
+            // println!(" ");
         }
-        println!(" ");
     }
     // Check hashes of response files
     for (challenge, response) in challenge_files.iter().skip(1).zip(response_files.iter()) {
@@ -106,17 +106,17 @@ fn main() {
                 }
             }
         } else {
-            println!("The hash of {:?} is", response);
-            for line in computed_hash.chunks(16) {
-                print!("\t");
-                for section in line.chunks(4) {
-                    for b in section {
-                        print!("{:02x}", b);
-                    }
-                    print!(" ");
-                }
-            }
+            // println!("The hash of {:?} is", response);
+            // for line in computed_hash.chunks(16) {
+            //     print!("\t");
+            //     for section in line.chunks(4) {
+            //         for b in section {
+            //             print!("{:02x}", b);
+            //         }
+            //         print!(" ");
+            //     }
+            // }
+            // println!(" ");
         }
-        println!(" ");
     }
 }
