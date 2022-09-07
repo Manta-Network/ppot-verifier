@@ -1,12 +1,11 @@
 // Temporary bin to resolve a weird issue with the hash of certain files
 
 // The files with invalid hashes are `challenge_0002` and `challenge_0003`.
-// My numbering differs from ppot by 1, so the corresponding URLs are 
+// My numbering differs from ppot by 1, so the corresponding URLs are
 // "https://ppot.blob.core.windows.net/public/challenge_0003"
 // "https://ppot.blob.core.windows.net/public/challenge_0004"
 
 // This function is an abridged version of the `downloader`
-
 
 use anyhow::anyhow;
 use core::{cmp::min, num::ParseIntError, str::FromStr};
