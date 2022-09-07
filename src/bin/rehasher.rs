@@ -1,7 +1,7 @@
 use memmap::MmapOptions;
 use ppot_verifier::calculate_hash;
 use std::fs::{File, OpenOptions};
-use std::io::Write;
+use std::io::{Read, Write};
 use std::time::Instant;
 
 fn main() {
@@ -22,6 +22,25 @@ fn main() {
             // std::io::ErrorKind(AlreadyExists) => { todo!() },
             _ => println!("File {:?} has already been hashed", path),
         }
+
+        // Now print the hashes
+        let mut file = OpenOptions::new()
+            .read(true)
+            .open(&hash_path)
+            .expect("unable to open file in this directory");
+        let mut computed_hash = [0u8; 64];
+        let _ = file.read(&mut computed_hash[..]).unwrap();
+        println!("The hash of {:?} is", hash_path);
+        for line in computed_hash.chunks(16) {
+            print!("\t");
+            for section in line.chunks(4) {
+                for b in section {
+                    print!("{:02x}", b);
+                }
+                print!(" ");
+            }
+        }
+        println!(" ");
     }
 }
 
