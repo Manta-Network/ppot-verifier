@@ -4,7 +4,7 @@ use std::fs::{File, OpenOptions};
 use std::io::Write;
 use std::time::Instant;
 
-const NUM_ROUNDS: usize = 71;
+const NUM_ROUNDS: usize = 72;
 
 fn main() {
     let challenge_files = challenge_paths(NUM_ROUNDS);
